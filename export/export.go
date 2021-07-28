@@ -2,6 +2,7 @@ package export
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/jrmycanady/gocronometer"
 	"regexp"
@@ -53,7 +54,7 @@ type Opts struct {
 	End      string
 	Username string
 	Password string
-	//Format ExportFormat
+	Format   ExportFormat
 	//OutputFile string
 	//InternetMagic bool
 
@@ -163,6 +164,18 @@ func Run(opt Opts) (string, error) {
 		}
 		return data, nil
 	case ExportTypeServings:
+		if opt.Format == ExportFormatJSON {
+			data, err := client.ExportServingsParsed(context.Background(), opt.StartTime, opt.EndTime)
+			if err != nil {
+				return "", fmt.Errorf("failed to export servings: %s", err)
+			}
+
+			jsonStr, err := json.Marshal(data)
+			if err != nil {
+				return "", fmt.Errorf("mashalling json: %s", err)
+			}
+			return string(jsonStr), nil
+		}
 		data, err := client.ExportServings(context.Background(), opt.StartTime, opt.EndTime)
 		if err != nil {
 			return "", fmt.Errorf("failed to export servings: %s", err)

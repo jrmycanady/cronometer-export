@@ -20,13 +20,14 @@ const (
 type CLIOpts struct {
 	ExportOpts export.Opts
 	Type       string
+	Format     string
 
 	OutputFile string
 }
 
 var cliOpts CLIOpts
 
-const version = "1.0.0"
+const version = "1.1.0"
 
 var rootCmd = &cobra.Command{
 	Use:   "cronometer-export",
@@ -54,7 +55,7 @@ func init() {
 	rootCmd.MarkFlagRequired("username")
 	rootCmd.Flags().StringVarP(&cliOpts.ExportOpts.Password, "password", "p", "", "")
 	rootCmd.MarkFlagRequired("password")
-	//rootCmd.Flags().StringVarP(&cliOpts.ExportOpts.Format, "format", "f", "raw", "The output format. (raw | json)")
+	rootCmd.Flags().StringVarP(&cliOpts.Format, "format", "f", "raw", "The output format. (raw | json) (Only available on the servings type.)")
 	//rootCmd.Flags().BoolVarP(&cliOpts.ExportOpts.InternetMagic, "internet-magic", "i", false, "Denotes if the magic values should be pulled from the internet.")
 	rootCmd.Flags().StringVarP(&cliOpts.OutputFile, "out-file", "o", "", "The file to output the data to. If not provided stdout will be used.")
 }
@@ -62,6 +63,7 @@ func init() {
 func run(cmd *cobra.Command, args []string) {
 
 	cliOpts.ExportOpts.Type = export.ExportType(cliOpts.Type)
+	cliOpts.ExportOpts.Format = export.ExportFormat(cliOpts.Format)
 	data, err := export.Run(cliOpts.ExportOpts)
 	if err != nil {
 		fmt.Println(err)
