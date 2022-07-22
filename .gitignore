@@ -15,3 +15,6 @@
 # vendor/
 /release/cronometer-export-release-tmp/
 /cronometer-export
+/.idea/cronometer-export.iml
+/.idea/modules.xml
+/.idea/vcs.xml
