@@ -62,6 +62,8 @@ By default, all output is the raw CSV format provided by the API. Some types sup
 ## Uploading to Google Drive
 
 1. Download `gdrive` from https://github.com/prasmussen/gdrive/releases.
+1. Make sure the `gdrive` and `cronometer-export` binaries are in the same directory as the `to-gdrive.bash` script.
+1. Fill in your information in `to-gdrive.bash`.
 1. Execute `to-gdrive.bash` once to test, and to provide the `gdrive` with
    permissions to your Google Drive.
 1. Use `echo "0 20 * * * ~/to-gdrive"| crontab -` to have the script run every
