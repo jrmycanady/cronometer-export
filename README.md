@@ -58,3 +58,13 @@ Ouput is provided either to a file using the -o flag or to stdout.
 By default, all output is the raw CSV format provided by the API. Some types support a json output that can be enabled via the -f flag.
 
 `-f, --format string     The output format. (raw | json) (Only available on the servings type.) (default "raw")`
+
+## Uploading to Google Drive
+
+1. Download `gdrive` from https://github.com/prasmussen/gdrive/releases.
+1. Execute `to-gdrive.bash` once to test, and to provide the `gdrive` with
+   permissions to your Google Drive.
+1. Use `echo "0 20 * * * ~/to-gdrive"| crontab -` to have the script run every
+   day.
+   **This overwrites your crontab.** Use `(crontab -l ; echo ""0 20 * * *
+   ~/to-gdrive")| crontab -` to append instead
